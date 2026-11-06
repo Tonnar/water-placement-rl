@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Experiment outputs
+runs/
+wandb/
+*.pt
+*.pth
+*.zip
+
+# Structural data (keep data/README.md)
+data/*
+!data/README.md
+*.ccp4
+*.mrc
+*.mtz
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/

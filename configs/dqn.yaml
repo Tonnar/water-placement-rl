@@ -1,0 +1,36 @@
+# Double DQN with a dueling head and prioritized experience replay.
+algo: dqn
+seed: 0
+
+data:
+  synthetic: {n_train: 2, n_test: 1, n_waters: 8, grid_size: 24, voxel_size: 1.0}
+
+env:
+  step_size: 0.5
+  noise: 1.5
+  termination_mse: 0.3
+  termination_reward: 10.0
+  max_episode_steps: 500
+  # (mse_threshold, bonus) pairs paid once per episode
+  milestones: [[1.5, 1.0], [1.0, 2.0], [0.6, 3.0]]
+
+agent:
+  lr: 1.0e-4
+  gamma: 0.97
+  double: true
+  dueling: true
+  target_update_every: 1000
+
+train:
+  total_steps: 50000
+  steps_per_structure: 5000
+  batch_size: 128
+  learning_starts: 1000
+  n_step: 3
+  prioritized: true
+  per_alpha: 0.6
+  per_beta_start: 0.4
+  epsilon_start: 1.0
+  epsilon_end: 0.05
+  epsilon_decay_steps: 20000
+  log_every: 1000

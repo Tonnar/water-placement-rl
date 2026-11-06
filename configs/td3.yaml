@@ -1,0 +1,41 @@
+# TD3 with spherical actions, n-step returns and oracle demonstrations.
+# Real data: replace `data.synthetic` with
+#   data: {synthetic: null, train_dir: data/train, test_dir: data/test, grid_size: 48}
+algo: td3
+seed: 0
+
+data:
+  synthetic: {n_train: 2, n_test: 1, n_waters: 12, grid_size: 24, voxel_size: 1.0}
+
+env:
+  action_type: spherical
+  max_movement: 0.25        # Angstrom per step
+  noise: 1.5                # RMS initial displacement per water (Angstrom)
+  success_threshold: 0.1    # a water within this distance is locked as solved
+  success_reward: 3.0
+  termination_mse: 0.5
+  termination_reward: 2.0
+  max_episode_steps: 1000
+  focus_mode: round_robin
+
+agent:
+  actor_lr: 1.0e-4
+  critic_lr: 3.0e-4
+  gamma: 0.9
+  tau: 0.005
+  policy_noise: 0.2
+  noise_clip: 0.5
+  policy_delay: 2
+  bc_weight: 1.0
+  bc_decay_updates: 20000
+
+train:
+  total_steps: 50000
+  steps_per_structure: 5000
+  batch_size: 128
+  learning_starts: 2000
+  n_step: 3
+  prioritized: false
+  explore_noise: 0.1
+  expert_prefill_steps: 5000
+  log_every: 1000

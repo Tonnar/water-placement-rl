@@ -1,0 +1,34 @@
+# PPO with GAE and 3D (cartesian) displacement actions.
+algo: ppo
+seed: 0
+
+data:
+  synthetic: {n_train: 2, n_test: 1, n_waters: 12, grid_size: 24, voxel_size: 1.0}
+
+env:
+  action_type: cartesian
+  max_movement: 0.25
+  noise: 1.5
+  success_threshold: 0.1
+  success_reward: 3.0
+  termination_mse: 0.5
+  termination_reward: 2.0
+  max_episode_steps: 1000
+  focus_mode: lowest_density   # epsilon-greedy over the waters in the least density
+  focus_epsilon: 0.3
+
+agent:
+  lr: 3.0e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  value_coef: 0.5
+  entropy_coef: 0.0
+  epochs: 4
+  batch_size: 64
+  target_kl: 0.03
+
+train:
+  total_steps: 100000
+  steps_per_structure: 10240
+  rollout_steps: 1024
